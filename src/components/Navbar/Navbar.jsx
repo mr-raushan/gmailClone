@@ -4,8 +4,17 @@ import { CiCircleQuestion } from "react-icons/ci";
 import { CiSettings } from "react-icons/ci";
 import { PiDotsNineBold } from "react-icons/pi";
 import Avatar from "react-avatar";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setSearchText } from "../../redux/appSlice";
 
 export const Navbar = () => {
+  const [input, setInput] = useState("");
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setSearchText(input));
+  }, [input]);
+
   return (
     <div className="flex items-center justify-between mx-3 h-16">
       <div className="flex items-center justify-between gap-10">
@@ -17,9 +26,11 @@ export const Navbar = () => {
             <img
               src="https://mailmeteor.com/logos/assets/PNG/Gmail_Logo_512px.png"
               alt="gmail-logo"
-              className="w-8"
+              className="w-8 cursor-pointer"
             />
-            <h1 className="text-2xl font-medium text-gray-600">Gmail</h1>
+            <h1 className="text-2xl font-medium cursor-pointer text-gray-600">
+              Gmail
+            </h1>
           </div>
         </div>
       </div>
@@ -32,6 +43,8 @@ export const Navbar = () => {
           />
           <input
             type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
             placeholder="Search Email..."
             className="rounded-full w-full ml-3 bg-transparent outline-none px-1"
           />

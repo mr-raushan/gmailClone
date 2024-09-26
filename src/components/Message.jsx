@@ -1,12 +1,16 @@
+/*eslint-disable*/
 import { MdCropSquare } from "react-icons/md";
 import { RiStarLine } from "react-icons/ri";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { selectedEmail } from "../redux/appSlice";
 
-export const Message = () => {
+export const Message = ({ email }) => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const openMail = () => {
-    navigate("/mail/1234");
+    dispatch(selectedEmail(email));
+    navigate(`/mail/${email.id}`);
   };
 
   return (
@@ -24,10 +28,12 @@ export const Message = () => {
       </div>
       <div className="flex-1 ml-4">
         <p className=" text-gray-800 font-semibold truncate inline-block max-w-full">
-          hello jee, kaise ho sb kya hal chal hai aapke
+          {email?.message}
         </p>
       </div>
-      <div className="flex-none text-gray-400 text-sm">time ayega</div>
+      <div className="flex-none text-gray-400 text-sm">
+        {new Date(email?.createdAt?.seconds * 1000).toUTCString()}
+      </div>
     </div>
   );
 };
